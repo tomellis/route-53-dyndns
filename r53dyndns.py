@@ -9,7 +9,7 @@ import re
 from re import search
 import socket
 import sys
-from urllib2 import urlopen
+import urllib.request
 
 __author__ = "Jacob Sanford"
 __license__ = "MIT"
@@ -37,7 +37,8 @@ if options.verbose:
         level=logging.INFO,
     )
 
-content = urlopen(options.ip_get_url).read().strip()
+resource = urllib.request.urlopen(options.ip_get_url).read().strip()
+content = resource.decode('utf-8')
 ip_list = re.findall(r'[0-9]+(?:\.[0-9]+){3}', content)
 if len(ip_list) < 1:
     logging.error("Unable to find an IP address from within the URL:  %s" % options.ip_get_url)
